@@ -25,10 +25,10 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Add repo source
-        run: dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github-ep "https://nuget.pkg.github.com/eperegrine/index.json"
+        run: dotnet nuget add source --username eperegrine --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github-ep --source "https://nuget.pkg.github.com/eperegrine/index.json"
       - name: Pack project
         run: dotnet pack --configuration Release --version-suffix $(git rev-parse --short "$GITHUB_SHA")
       - name: Push to NuGet (GH)
-        run: dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source "github-ep" --api-key ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source github-ep --api-key ${{ secrets.GITHUB_TOKEN }}
 #      - name: Test
 #        run: dotnet test --no-build --verbosity normal
