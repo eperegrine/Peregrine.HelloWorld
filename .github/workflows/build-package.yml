@@ -36,6 +36,6 @@ jobs:
       - name: Push to NuGet (GH)
         run: dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source github-ep --api-key ${{ secrets.GITHUB_TOKEN }}
       - name: Step to run on release
-        run: echo {{ github.event_name }}
+        run: echo ${{ github.event_name }}
 #      - name: Test
 #        run: dotnet test --no-build --verbosity normal
