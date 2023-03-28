@@ -33,11 +33,13 @@ jobs:
         run: dotnet nuget add source --username eperegrine --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github-ep "https://nuget.pkg.github.com/eperegrine/index.json"
       - name: Pack and Publish (Standard)
         if: github.event_name != 'release'
-        run: dotnet pack --configuration Release --version-suffix $(git rev-parse --short "$GITHUB_SHA")
-         | dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source github-ep --api-key ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dotnet pack --configuration Release --version-suffix $(git rev-parse --short "$GITHUB_SHA")
+          dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source github-ep --api-key ${{ secrets.GITHUB_TOKEN }}
       - name: Pack and Publish (Release)
         if: github.event_name == 'release'
-        run: dotnet pack --configuration Release
-          | dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source github-ep --api-key ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dotnet pack --configuration Release
+          dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source github-ep --api-key ${{ secrets.GITHUB_TOKEN }}
 #      - name: Test
 #        run: dotnet test --no-build --verbosity normal
