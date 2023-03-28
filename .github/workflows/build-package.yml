@@ -29,6 +29,6 @@ jobs:
       - name: Pack project
         run: dotnet pack --configuration Release --version-suffix $(git rev-parse --short "$GITHUB_SHA")
       - name: Push to NuGet (GH)
-        run: dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source "github-ep"
+        run: dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source "github-ep" --api-key ${{ secrets.GITHUB_TOKEN }}
 #      - name: Test
 #        run: dotnet test --no-build --verbosity normal
