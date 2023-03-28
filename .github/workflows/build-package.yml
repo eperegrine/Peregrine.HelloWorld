@@ -8,6 +8,8 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  release:
+    types: [ published ]
 
 permissions:
   packages: write
@@ -33,5 +35,7 @@ jobs:
         run: dotnet pack --configuration Release --version-suffix $(git rev-parse --short "$GITHUB_SHA")
       - name: Push to NuGet (GH)
         run: dotnet nuget push "Peregrine.HelloWorld/bin/Release/Peregrine.HelloWorld.*.nupkg" --source github-ep --api-key ${{ secrets.GITHUB_TOKEN }}
+      - name: Step to run on release
+        run: echo {{ github.event_name }}
 #      - name: Test
 #        run: dotnet test --no-build --verbosity normal
